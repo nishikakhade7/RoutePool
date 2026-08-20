@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+html,body{margin:0;padding:0}
+body{background:#EFE8DC;font-family:Karla,system-ui,sans-serif;color:#211C26;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#8A2B6B;text-decoration:none}a:hover{color:#211C26}
+@keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes drawLine{from{stroke-dashoffset:900}to{stroke-dashoffset:0}}
+@keyframes dashRun{to{stroke-dashoffset:-300}}
+@keyframes pulseRing{0%{transform:scale(.6);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+@keyframes popIn{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes nodeBlink{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes growBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+</style></helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1200px 760px at 12% -8%,#FBF3E4 0%,rgba(251,243,228,0) 58%),radial-gradient(1000px 700px at 92% 4%,#F6E6F0 0%,rgba(246,230,240,0) 52%),#EFE8DC">
+
+<sc-if value="{{ isAuth }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="01 Onboarding" style="min-height:100vh;position:relative;overflow:hidden">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;opacity:.42" fill="none">
+    <path d="M-40 700 C300 700 260 300 620 300 C960 300 940 520 1500 480" stroke="#F2A230" stroke-width="3" stroke-dasharray="900" style="animation:{{ lineAnim }}"></path>
+    <path d="M-40 820 C360 820 420 420 760 420 C1080 420 1120 640 1500 620" stroke="#8A2B6B" stroke-opacity=".35" stroke-width="1.6" stroke-dasharray="4 9"></path>
+    <path d="M-40 560 C240 560 200 180 520 180 C820 180 860 320 1500 300" stroke="#8A2B6B" stroke-opacity=".18" stroke-width="1.4" stroke-dasharray="4 9"></path>
+    <circle cx="620" cy="300" r="8" fill="#F2A230"></circle>
+    <circle cx="620" cy="300" r="8" fill="#F2A230" style="transform-origin:620px 300px;animation:pulseRing 3s ease-out infinite"></circle>
+    <circle cx="760" cy="420" r="6" fill="#8A2B6B" fill-opacity=".45"></circle>
+    <circle cx="520" cy="180" r="5" fill="#8A2B6B" fill-opacity=".3"></circle>
+  </svg>
+
+  <header style="position:relative;max-width:1180px;margin:0 auto;padding:26px 32px;display:flex;align-items:center;gap:14px">
+    <span style="width:11px;height:11px;border-radius:50%;background:{{ accent }};box-shadow:0 0 0 4px rgba(242,162,48,.2)"></span>
+    <span style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.03em">RoutePool</span>
+    <span style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(33,28,38,.4);border:1px solid rgba(33,28,38,.14);padding:5px 9px;border-radius:999px">Phase 1 · requests &amp; matching</span>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:26px;font:600 13.5px Karla,sans-serif;color:rgba(33,28,38,.6)">
+      <span style="cursor:pointer;transition:color .18s" style-hover="color:#211C26">How matching works</span>
+      <span style="cursor:pointer;transition:color .18s" style-hover="color:#211C26">Campus coverage</span>
+    </div>
+  </header>
+
+  <div style="position:relative;max-width:1180px;margin:0 auto;padding:34px 32px 80px;display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;min-height:70vh">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#E4F2EC;color:#0F6B52;font:700 11px Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:999px;margin-bottom:22px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z" fill="#157F63"></path><path d="M8.8 12.2l2.3 2.3 4.2-4.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+        Verified students only
+      </div>
+      <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:70px;line-height:.96;letter-spacing:-.04em;margin:0 0 20px;text-wrap:balance">Pool the route,<br>split the fare.</h1>
+      <p style="margin:0 0 32px;font-size:18px;line-height:1.55;color:rgba(33,28,38,.62);max-width:480px;text-wrap:pretty">RoutePool reads your route as a graph and finds the S.P.I.T students already heading your way. Match, meet at the gate, share one auto.</p>
+      <div style="display:flex;gap:34px;padding-top:26px;border-top:1px solid rgba(33,28,38,.1)">
+        <div><div style="font:700 30px 'Familjen Grotesk',sans-serif;letter-spacing:-.03em">1,284</div><div style="font-size:12.5px;color:rgba(33,28,38,.5);font-weight:600">verified students</div></div>
+        <div><div style="font:700 30px 'Familjen Grotesk',sans-serif;letter-spacing:-.03em">₹4.1L</div><div style="font-size:12.5px;color:rgba(33,28,38,.5);font-weight:600">pooled fares saved</div></div>
+        <div><div style="font:700 30px 'Familjen Grotesk',sans-serif;letter-spacing:-.03em">68%</div><div style="font-size:12.5px;color:rgba(33,28,38,.5);font-weight:600">requests matched</div></div>
+      </div>
+    </div>
+
+    <div style="background:#FDFAF4;border:1px solid rgba(33,28,38,.07);border-radius:30px;padding:38px;box-shadow:0 2px 4px rgba(33,28,38,.04),0 44px 70px -40px rgba(33,28,38,.55)">
+      <sc-if value="{{ stageEmail }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="font:600 11px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:10px">Step 1 of 2</div>
+        <h2 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:29px;letter-spacing:-.03em;margin:0 0 8px">Sign in with your institute email</h2>
+        <p style="margin:0 0 26px;font-size:14.5px;line-height:1.5;color:rgba(33,28,38,.58)">Personal Gmail addresses are rejected. Only @spit.ac.in students and faculty can request or join a pool.</p>
+        <label style="display:block;font:600 11px Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(33,28,38,.45);margin-bottom:9px">Institutional email</label>
+        <div style="display:flex;align-items:center;background:#fff;border:1.5px solid rgba(33,28,38,.12);border-radius:16px;padding:4px 6px 4px 16px;transition:border-color .2s" style-hover="border-color:rgba(242,162,48,.75)">
+          <input value="{{ email }}" onChange="{{ onEmail }}" placeholder="nishika.khade" style="flex:1;min-width:0;border:0;outline:0;background:transparent;font:500 16px Karla,sans-serif;color:#211C26;padding:14px 0"></input>
+          <span style="font:700 13.5px Karla,sans-serif;color:#8A2B6B;background:#F7EBF3;padding:10px 12px;border-radius:11px;white-space:nowrap">@spit.ac.in</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin:14px 0 24px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="3" stroke="#157F63" stroke-width="2"></rect><path d="M8.5 10V7.5a3.5 3.5 0 017 0V10" stroke="#157F63" stroke-width="2"></path></svg>
+          <span style="font-size:12.5px;color:#157F63;font-weight:600">One-time code, no password stored</span>
+        </div>
+        <button onClick="{{ sendCode }}" style="width:100%;border:0;border-radius:16px;padding:18px;background:{{ accent }};color:#211C26;font:700 16.5px Karla,sans-serif;cursor:pointer;box-shadow:0 14px 26px -12px rgba(242,162,48,.95);transition:transform .16s,box-shadow .16s" style-hover="transform:translateY(-2px);box-shadow:0 20px 32px -14px rgba(242,162,48,1)">Send verification code</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ stageOtp }}">
+      <div style="animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+        <div style="font:600 11px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:10px">Step 2 of 2</div>
+        <h2 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:29px;letter-spacing:-.03em;margin:0 0 8px">Enter your code</h2>
+        <p style="margin:0 0 26px;font-size:14.5px;line-height:1.5;color:rgba(33,28,38,.58)">Sent to <span style="color:#8A2B6B;font-weight:700">{{ emailFull }}</span></p>
+        <div style="display:flex;gap:12px;margin-bottom:16px">
+          <sc-for list="{{ otpCells }}" as="c" hint-placeholder-count="4">
+            <div style="flex:1;height:74px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:30px;background:#fff;border:1.5px solid {{ c.bd }};box-shadow:{{ c.sh }};transition:all .2s">{{ c.d }}</div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px">
+          <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12">
+            <button onClick="{{ k.press }}" style="border:1px solid rgba(33,28,38,.09);background:#fff;border-radius:14px;padding:14px 0;font:600 20px 'Familjen Grotesk',sans-serif;color:#211C26;cursor:pointer;transition:all .14s" style-hover="background:#F4EEE3;transform:translateY(-1px)" style-active="transform:scale(.96)">{{ k.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:rgba(33,28,38,.45);font-weight:600">
+          <span onClick="{{ backToEmail }}" style="cursor:pointer;text-decoration:underline">Change email</span>
+          <span>Any 4 digits work here · resend in 0:24</span>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ stageVerified }}">
+      <div style="text-align:center;padding:10px 0">
+        <div style="position:relative;width:132px;height:132px;margin:0 auto 26px;display:flex;align-items:center;justify-content:center">
+          <span style="position:absolute;inset:0;border-radius:50%;background:rgba(21,127,99,.15);animation:pulseRing 2.6s ease-out infinite"></span>
+          <span style="position:absolute;inset:0;border-radius:50%;background:rgba(21,127,99,.15);animation:pulseRing 2.6s .9s ease-out infinite"></span>
+          <div style="width:98px;height:98px;border-radius:50%;background:linear-gradient(160deg,#1B9B75,#157F63);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 36px -14px rgba(21,127,99,.85);animation:popIn .5s cubic-bezier(.2,1.3,.4,1) both">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M5 12.6l4.4 4.4L19 7" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:7px;background:#E4F2EC;color:#0F6B52;font:700 11px Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 13px;border-radius:999px;margin-bottom:16px;animation:rise .5s .1s both">Verified student</div>
+        <h2 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-.035em;line-height:1.05;margin:0 0 12px;animation:rise .5s .16s both">You're in, Nishika.</h2>
+        <p style="margin:0 auto 28px;font-size:14.5px;line-height:1.55;color:rgba(33,28,38,.6);max-width:320px;animation:rise .5s .22s both">{{ emailFull }} confirmed · TE Computer Engineering · S.P.I.T Andheri. Everyone you pool with clears this same check.</p>
+        <button onClick="{{ enterApp }}" style="width:100%;border:0;border-radius:16px;padding:18px;background:#211C26;color:#FDFAF4;font:700 16.5px Karla,sans-serif;cursor:pointer;box-shadow:0 16px 28px -14px rgba(33,28,38,.85);transition:transform .16s;animation:rise .5s .28s both" style-hover="transform:translateY(-2px)">Enter RoutePool</button>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ inApp }}">
+<div>
+  <header style="position:sticky;top:0;z-index:40;background:rgba(253,250,244,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(33,28,38,.09)">
+    <div style="max-width:1180px;margin:0 auto;padding:0 32px;height:70px;display:flex;align-items:center;gap:36px">
+      <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;cursor:pointer">
+        <span style="width:10px;height:10px;border-radius:50%;background:{{ accent }};box-shadow:0 0 0 4px rgba(242,162,48,.2)"></span>
+        <span style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:18.5px;letter-spacing:-.03em">RoutePool</span>
+      </div>
+      <nav style="display:flex;align-items:center;gap:4px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+          <button onClick="{{ n.go }}" style="flex:none;white-space:nowrap;border:0;background:{{ n.bg }};color:{{ n.fg }};font:600 14px Karla,sans-serif;padding:9px 15px;border-radius:11px;cursor:pointer;transition:all .18s" style-hover="background:#F4EEE3">{{ n.label }}</button>
+        </sc-for>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <button onClick="{{ goRequest }}" style="flex:none;white-space:nowrap;border:0;background:{{ accent }};color:#211C26;font:700 13.5px Karla,sans-serif;padding:11px 17px;border-radius:12px;cursor:pointer;box-shadow:0 10px 20px -12px rgba(242,162,48,.9);transition:transform .16s" style-hover="transform:translateY(-2px)">Request a ride</button>
+        <button onClick="{{ goNotifs }}" style="position:relative;width:40px;height:40px;border-radius:12px;border:1px solid rgba(33,28,38,.1);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s" style-hover="background:#F4EEE3">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 4a5.5 5.5 0 015.5 5.5c0 4 1.5 5.5 1.5 5.5H5s1.5-1.5 1.5-5.5A5.5 5.5 0 0112 4z" stroke="#211C26" stroke-width="1.8" stroke-linejoin="round"></path><path d="M10 18a2 2 0 004 0" stroke="#211C26" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          <span style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:{{ accent }};border:2px solid #fff"></span>
+        </button>
+        <div onClick="{{ goProfile }}" style="display:flex;align-items:center;gap:9px;padding:5px 12px 5px 5px;border-radius:999px;border:1px solid rgba(33,28,38,.1);background:#fff;cursor:pointer;transition:background .18s" style-hover="background:#F4EEE3">
+          <span style="width:30px;height:30px;border-radius:50%;background:linear-gradient(150deg,#F7D9A8,#E8C9DE);font:700 11.5px Karla,sans-serif;color:#5C3350;display:flex;align-items:center;justify-content:center">NK</span>
+          <span style="font:600 13px Karla,sans-serif">Nishika</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ isHome }}">
+  <div data-screen-label="02 Dashboard" style="max-width:1180px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px">
+      <div>
+        <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:40px;letter-spacing:-.035em;margin:0 0 6px">Evening, Nishika</h1>
+        <div style="display:flex;align-items:center;gap:7px;font-size:13.5px;color:#157F63;font-weight:700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z" fill="#157F63"></path><path d="M8.8 12.2l2.3 2.3 4.2-4.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>Verified · TE Comps · 3 pools this week</div>
+      </div>
+      <div style="font-size:13px;color:rgba(33,28,38,.45);font-weight:600">Tue 20 Aug · 5:42 PM</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.55fr 1fr;gap:20px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div onClick="{{ goRequest }}" style="position:relative;overflow:hidden;border-radius:28px;padding:34px 36px;background:linear-gradient(140deg,#2B2130 0%,#4A2340 58%,#6E2A57 100%);color:#FDFAF4;cursor:pointer;box-shadow:0 30px 56px -30px rgba(33,28,38,.95);transition:transform .2s" style-hover="transform:translateY(-3px)">
+          <svg viewBox="0 0 700 260" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5" fill="none">
+            <path d="M-20 220 C140 220 120 70 300 70 C480 70 470 150 720 138" stroke="{{ accent }}" stroke-width="2.6" stroke-dasharray="900" style="animation:{{ lineAnim }}"></path>
+            <path d="M-20 254 C180 254 220 118 420 118 C580 118 620 190 720 184" stroke="#FDFAF4" stroke-opacity=".28" stroke-width="1.4" stroke-dasharray="3 8"></path>
+            <circle cx="300" cy="70" r="6" fill="{{ accent }}"></circle>
+            <circle cx="420" cy="118" r="5" fill="#FDFAF4" fill-opacity=".7" style="animation:nodeBlink 2.6s infinite"></circle>
+          </svg>
+          <div style="position:relative;max-width:420px">
+            <div style="font:600 11px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.6);margin-bottom:12px">Where to?</div>
+            <div style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:38px;letter-spacing:-.035em;line-height:1.05;margin-bottom:10px">Request a ride</div>
+            <p style="margin:0 0 22px;font-size:14.5px;line-height:1.5;color:rgba(253,250,244,.72)">Typical wait for a match on your evening route: under 4 minutes.</p>
+            <span style="display:inline-flex;align-items:center;gap:9px;background:{{ accent }};color:#211C26;font:700 14px Karla,sans-serif;padding:13px 19px;border-radius:999px">Find my pool
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M12 6l6 6-6 6" stroke="#211C26" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+            <h3 style="font:700 17px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin:0">Tonight's pool</h3>
+            <span onClick="{{ goHistory }}" style="font-size:13px;color:rgba(33,28,38,.5);font-weight:600;cursor:pointer">All rides</span>
+          </div>
+          <div onClick="{{ goConfirmed }}" style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:24px;padding:24px 26px;cursor:pointer;box-shadow:0 1px 2px rgba(33,28,38,.04),0 22px 44px -34px rgba(33,28,38,.7);transition:transform .18s,box-shadow .18s" style-hover="transform:translateY(-2px);box-shadow:0 28px 52px -32px rgba(33,28,38,.8)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+              <span style="background:#E4F2EC;color:#0F6B52;font:700 10.5px Karla,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:8px">Matched</span>
+              <span style="font:700 14px Karla,sans-serif">Departs 6:15 PM</span>
+              <span style="margin-left:auto;font:700 20px 'Familjen Grotesk',sans-serif;color:#8A2B6B;letter-spacing:-.02em">₹60 each</span>
+            </div>
+            <svg viewBox="0 0 640 60" style="width:100%;height:60px" fill="none">
+              <path d="M20 46 C120 46 110 16 220 16" stroke="#8A2B6B" stroke-width="2" stroke-dasharray="3 6"></path>
+              <path d="M220 16 C380 16 420 42 620 42" stroke="{{ accent }}" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="900" style="animation:{{ lineAnim }}"></path>
+              <circle cx="20" cy="46" r="5" fill="#8A2B6B"></circle><circle cx="220" cy="16" r="7" fill="{{ accent }}"></circle><circle cx="620" cy="42" r="5" fill="#211C26"></circle>
+            </svg>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:rgba(33,28,38,.55);font-weight:600"><span>Gate 2, S.P.I.T</span><span>Andheri East</span><span>Jogeshwari East</span></div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(33,28,38,.07)">
+              <div style="display:flex">
+                <span style="width:28px;height:28px;border-radius:50%;background:#E8C9DE;border:2px solid #fff;font:700 10px Karla,sans-serif;color:#5C3350;display:flex;align-items:center;justify-content:center">RM</span>
+                <span style="width:28px;height:28px;border-radius:50%;background:#C9DDD5;border:2px solid #fff;margin-left:-9px;font:700 10px Karla,sans-serif;color:#1F5A4A;display:flex;align-items:center;justify-content:center">KS</span>
+              </div>
+              <span style="font-size:13.5px;color:rgba(33,28,38,.62)">Rhea Menon &amp; Kabir Shetty · both verified @spit.ac.in</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-left:auto"><path d="M9 6l6 6-6 6" stroke="rgba(33,28,38,.35)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font:700 17px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin:0 0 12px">Recent activity</h3>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ activity }}" as="a" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:18px;padding:15px 18px">
+                <span style="width:38px;height:38px;border-radius:12px;background:{{ a.chip }};display:flex;align-items:center;justify-content:center;font:700 14px 'Familjen Grotesk',sans-serif;color:{{ a.chipFg }}">{{ a.icon }}</span>
+                <div style="flex:1;min-width:0"><div style="font:700 14px Karla,sans-serif">{{ a.title }}</div><div style="font-size:12.5px;color:rgba(33,28,38,.5)">{{ a.sub }}</div></div>
+                <span style="font:700 15px 'Familjen Grotesk',sans-serif;color:#157F63">{{ a.amt }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-if value="{{ showSavings }}" hint-placeholder-val="{{ true }}">
+        <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:24px;padding:24px;box-shadow:0 1px 2px rgba(33,28,38,.04),0 22px 44px -36px rgba(33,28,38,.7)">
+          <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(33,28,38,.42)">Saved so far</div>
+          <div style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:46px;letter-spacing:-.04em;margin:6px 0 4px">₹2,340</div>
+          <div style="font-size:13px;color:#157F63;font-weight:700;margin-bottom:18px">▲ ₹410 this month</div>
+          <div style="display:flex;align-items:flex-end;gap:7px;height:66px">
+            <sc-for list="{{ spark }}" as="s" hint-placeholder-count="6">
+              <div style="flex:1;background:{{ s.fill }};height:{{ s.h }};border-radius:6px 6px 3px 3px;transform-origin:bottom;animation:growBar .6s cubic-bezier(.2,.8,.2,1) both"></div>
+            </sc-for>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:rgba(33,28,38,.4);font-weight:700;margin-top:8px"><span>MAR</span><span>AUG</span></div>
+        </div>
+        </sc-if>
+
+        <div style="background:#F7EBF3;border:1px solid rgba(138,43,107,.1);border-radius:24px;padding:24px">
+          <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(92,51,80,.55);margin-bottom:14px">Busy routes right now</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ busy }}" as="b" hint-placeholder-count="3">
+              <div>
+                <div style="display:flex;justify-content:space-between;font:700 13.5px Karla,sans-serif;color:#5C3350;margin-bottom:6px"><span>{{ b.name }}</span><span>{{ b.n }}</span></div>
+                <div style="height:6px;border-radius:999px;background:rgba(138,43,107,.14);overflow:hidden"><div style="height:100%;width:{{ b.w }};border-radius:999px;background:#8A2B6B"></div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="border:1px dashed rgba(33,28,38,.2);border-radius:24px;padding:22px 24px">
+          <div style="font:700 14.5px 'Familjen Grotesk',sans-serif;margin-bottom:6px">No driver in Phase 1</div>
+          <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(33,28,38,.55)">RoutePool matches people, not cabs. You meet your group at the pickup node and grab a shared auto together.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isRequest }}">
+  <div data-screen-label="03 Request a ride" style="max-width:1180px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:40px;letter-spacing:-.035em;margin:0 0 8px">Request a ride</h1>
+    <p style="margin:0 0 28px;font-size:15.5px;color:rgba(33,28,38,.58)">Two nodes and a time window. The graph does the rest.</p>
+
+    <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start">
+      <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:26px;padding:30px;box-shadow:0 1px 2px rgba(33,28,38,.04),0 26px 50px -38px rgba(33,28,38,.7)">
+        <div style="display:flex;gap:16px">
+          <div style="display:flex;flex-direction:column;align-items:center;padding-top:34px">
+            <span style="width:12px;height:12px;border-radius:50%;border:3px solid #8A2B6B"></span>
+            <span style="width:2px;flex:1;min-height:54px;background:repeating-linear-gradient(to bottom,rgba(33,28,38,.25) 0 4px,transparent 4px 9px)"></span>
+            <span style="width:12px;height:12px;background:#211C26;border-radius:3px"></span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+            <div>
+              <label style="display:block;font:600 10.5px Karla,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:7px">Pickup node</label>
+              <div style="display:flex;align-items:center;gap:12px;background:#FDFAF4;border:1.5px solid rgba(33,28,38,.1);border-radius:14px;padding:15px 16px;font:600 15px Karla,sans-serif;cursor:pointer;transition:border-color .2s" style-hover="border-color:rgba(138,43,107,.5)">
+                <span style="flex:1">{{ from }}</span>
+                <span style="font-size:12px;color:rgba(33,28,38,.4);font-weight:600">Campus</span>
+              </div>
+            </div>
+            <div>
+              <label style="display:block;font:600 10.5px Karla,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:7px">Drop node</label>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ dests }}" as="d" hint-placeholder-count="6">
+                  <button onClick="{{ d.pick }}" style="border:1.5px solid {{ d.bd }};background:{{ d.bg }};color:{{ d.fg }};font:600 13.5px Karla,sans-serif;padding:11px 15px;border-radius:12px;cursor:pointer;transition:all .16s" style-hover="transform:translateY(-1px)">{{ d.name }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:1px;background:rgba(33,28,38,.08);margin:26px 0"></div>
+
+        <label style="display:block;font:600 10.5px Karla,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:10px">Pickup window</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
+          <sc-for list="{{ windows }}" as="w" hint-placeholder-count="4">
+            <button onClick="{{ w.pick }}" style="border:1.5px solid {{ w.bd }};background:{{ w.bg }};color:{{ w.fg }};font:600 13.5px Karla,sans-serif;padding:11px 16px;border-radius:12px;cursor:pointer;transition:all .16s" style-hover="transform:translateY(-1px)">{{ w.label }}</button>
+          </sc-for>
+        </div>
+
+        <label style="display:block;font:600 10.5px Karla,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:10px">Flexibility</label>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px">
+          <span style="font:700 15px 'Familjen Grotesk',sans-serif">± {{ flex }} min</span>
+          <div style="flex:1;height:6px;border-radius:999px;background:rgba(33,28,38,.1);position:relative">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:{{ flexW }};border-radius:999px;background:{{ accent }}"></div>
+          </div>
+          <button onClick="{{ lessFlex }}" style="width:34px;height:34px;border-radius:10px;border:1px solid rgba(33,28,38,.12);background:#FDFAF4;font:700 16px Karla,sans-serif;cursor:pointer" style-hover="background:#F4EEE3">−</button>
+          <button onClick="{{ moreFlex }}" style="width:34px;height:34px;border-radius:10px;border:1px solid rgba(33,28,38,.12);background:#FDFAF4;font:700 16px Karla,sans-serif;cursor:pointer" style-hover="background:#F4EEE3">+</button>
+        </div>
+
+        <button onClick="{{ startMatching }}" style="width:100%;border:0;border-radius:16px;padding:19px;background:#211C26;color:#FDFAF4;font:700 16.5px Karla,sans-serif;cursor:pointer;box-shadow:0 18px 32px -16px rgba(33,28,38,.85);transition:transform .16s" style-hover="transform:translateY(-2px)">Find matches on this route</button>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#2B2130,#4A2340);border-radius:26px;padding:28px;color:#FDFAF4;position:relative;overflow:hidden;box-shadow:0 26px 50px -32px rgba(33,28,38,.9)">
+        <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.55);margin-bottom:20px">Route preview</div>
+        <svg viewBox="0 0 380 210" style="width:100%;height:200px" fill="none">
+          <path d="M30 170 C120 170 110 60 210 60 C300 60 300 110 350 104" stroke="{{ accent }}" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="900" style="animation:{{ lineAnim }}"></path>
+          <path d="M30 194 C140 194 160 96 250 96 C320 96 330 140 350 138" stroke="#FDFAF4" stroke-opacity=".3" stroke-width="1.4" stroke-dasharray="3 8"></path>
+          <circle cx="30" cy="170" r="7" fill="#FDFAF4"></circle>
+          <circle cx="210" cy="60" r="7" fill="{{ accent }}"></circle>
+          <circle cx="210" cy="60" r="7" fill="{{ accent }}" style="transform-origin:210px 60px;animation:pulseRing 2.8s ease-out infinite"></circle>
+          <circle cx="350" cy="104" r="6" fill="#FDFAF4"></circle>
+          <text x="30" y="196" fill="rgba(253,250,244,.7)" font-family="Karla" font-size="11" font-weight="700">SPIT</text>
+          <text x="188" y="44" fill="{{ accent }}" font-family="Karla" font-size="11" font-weight="700">ANDHERI E</text>
+          <text x="308" y="126" fill="rgba(253,250,244,.7)" font-family="Karla" font-size="11" font-weight="700">{{ toShort }}</text>
+        </svg>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(253,250,244,.14)">
+          <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:rgba(253,250,244,.65)">Distance</span><span style="font-weight:700">7.4 km</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:rgba(253,250,244,.65)">Solo auto estimate</span><span style="font-weight:700">₹180</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:rgba(253,250,244,.65)">Pooled (3 riders)</span><span style="font-weight:700;color:{{ accent }}">₹60</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:rgba(253,250,244,.65)">Students on this route now</span><span style="font-weight:700">7</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isMatching }}">
+  <div data-screen-label="04a Matching" style="max-width:760px;margin:0 auto;padding:110px 32px 120px;text-align:center;animation:screenIn .3s ease-out">
+    <svg viewBox="0 0 520 260" style="width:100%;height:260px;margin-bottom:26px" fill="none">
+      <path d="M40 200 C160 200 150 70 270 70 C380 70 380 130 480 122" stroke="{{ accent }}" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="18 14" style="animation:dashRun 1.6s linear infinite"></path>
+      <path d="M40 232 C180 232 210 110 320 110 C420 110 440 160 480 156" stroke="#8A2B6B" stroke-opacity=".4" stroke-width="1.8" stroke-dasharray="10 12" style="animation:dashRun 2.4s linear infinite"></path>
+      <circle cx="40" cy="200" r="8" fill="#211C26"></circle>
+      <circle cx="270" cy="70" r="9" fill="{{ accent }}"></circle>
+      <circle cx="270" cy="70" r="9" fill="{{ accent }}" style="transform-origin:270px 70px;animation:pulseRing 1.8s ease-out infinite"></circle>
+      <circle cx="320" cy="110" r="7" fill="#8A2B6B" style="animation:nodeBlink 1.4s infinite"></circle>
+      <circle cx="480" cy="122" r="7" fill="#211C26"></circle>
+    </svg>
+    <h2 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-.035em;margin:0 0 10px">Scoring routes against yours</h2>
+    <p style="margin:0 0 26px;font-size:15px;color:rgba(33,28,38,.55)">Dijkstra pass over 7 open requests · overlap, direction, time window</p>
+    <div style="display:inline-flex;align-items:center;gap:10px;font:600 13px Karla,sans-serif;color:rgba(33,28,38,.5)">
+      <span style="width:16px;height:16px;border-radius:50%;border:2px solid rgba(33,28,38,.15);border-top-color:#211C26;animation:spin .8s linear infinite"></span>
+      Ranking candidates
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isMatches }}">
+  <div data-screen-label="04 Match results" style="max-width:1180px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:#E4F2EC;color:#0F6B52;font:700 11px Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;border-radius:999px;margin-bottom:14px">{{ matchCountLabel }}</div>
+        <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:40px;letter-spacing:-.035em;margin:0 0 6px">Students heading your way</h1>
+        <p style="margin:0;font-size:15px;color:rgba(33,28,38,.55)">{{ from }} → {{ to }} · {{ win }} · ± {{ flex }} min</p>
+      </div>
+      <button onClick="{{ goRequest }}" style="border:1px solid rgba(33,28,38,.14);background:#fff;font:600 13.5px Karla,sans-serif;padding:12px 17px;border-radius:12px;cursor:pointer;transition:background .18s" style-hover="background:#F4EEE3">Edit request</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ matches }}" as="m" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid {{ m.border }};border-radius:26px;padding:28px 30px;box-shadow:{{ m.shadow }};transition:transform .18s,box-shadow .18s;animation:rise .5s both" style-hover="transform:translateY(-3px);box-shadow:0 34px 60px -34px rgba(33,28,38,.75)">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;align-items:center">
+            <div>
+              <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+                <span style="width:52px;height:52px;border-radius:16px;background:{{ m.avBg }};color:{{ m.avFg }};font:700 17px 'Familjen Grotesk',sans-serif;display:flex;align-items:center;justify-content:center">{{ m.init }}</span>
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="font:700 19px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em">{{ m.name }}</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#157F63"></circle><path d="M7.6 12.3l3 3 5.6-6" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                  <div style="font-size:13px;color:rgba(33,28,38,.55);font-weight:600">{{ m.meta }}</div>
+                </div>
+                <span style="margin-left:auto;font:700 11px Karla,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:{{ m.rankFg }};background:{{ m.rankBg }};padding:6px 10px;border-radius:8px">{{ m.rank }}</span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px">
+                <sc-for list="{{ m.tags }}" as="t" hint-placeholder-count="3">
+                  <span style="font:600 12px Karla,sans-serif;color:rgba(33,28,38,.62);background:#F4EEE3;padding:6px 10px;border-radius:8px">{{ t }}</span>
+                </sc-for>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;font:600 11px Karla,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:7px"><span style="white-space:nowrap">Route overlap</span><span style="color:#211C26;font-size:12.5px;letter-spacing:0;white-space:nowrap">{{ m.overlap }}</span></div>
+              <div style="height:9px;border-radius:999px;background:rgba(33,28,38,.09);overflow:hidden">
+                <div style="height:100%;width:{{ m.bar }};border-radius:999px;background:linear-gradient(90deg,{{ accent }},#8A2B6B);transition:width .6s"></div>
+              </div>
+            </div>
+
+            <div>
+              <svg viewBox="0 0 340 120" style="width:100%;height:120px" fill="none">
+                <path d="M20 96 C90 96 84 34 170 34" stroke="#8A2B6B" stroke-width="2" stroke-dasharray="3 6"></path>
+                <path d="M170 34 C250 34 268 70 322 70" stroke="{{ accent }}" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="900" style="animation:{{ lineAnim }}"></path>
+                <circle cx="20" cy="96" r="5.5" fill="#8A2B6B"></circle>
+                <circle cx="170" cy="34" r="7.5" fill="{{ accent }}"></circle>
+                <circle cx="322" cy="70" r="5.5" fill="#211C26"></circle>
+                <text x="6" y="116" fill="rgba(33,28,38,.5)" font-family="Karla" font-size="10.5" font-weight="700">YOU</text>
+                <text x="140" y="20" fill="rgba(33,28,38,.72)" font-family="Karla" font-size="10.5" font-weight="700">SHARED LEG</text>
+                <text x="284" y="92" fill="rgba(33,28,38,.5)" font-family="Karla" font-size="10.5" font-weight="700">{{ m.dropShort }}</text>
+              </svg>
+              <div style="display:flex;gap:18px;margin-top:4px">
+                <div><div style="font:700 15px 'Familjen Grotesk',sans-serif">{{ m.dep }}</div><div style="font-size:11.5px;color:rgba(33,28,38,.5);font-weight:600">departs</div></div>
+                <div><div style="font:700 15px 'Familjen Grotesk',sans-serif">{{ m.walk }}</div><div style="font-size:11.5px;color:rgba(33,28,38,.5);font-weight:600">to pickup node</div></div>
+              </div>
+            </div>
+
+            <div style="text-align:right">
+              <div style="font-size:12.5px;color:rgba(33,28,38,.45);font-weight:600;text-decoration:line-through">₹{{ m.solo }} solo</div>
+              <div style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:44px;letter-spacing:-.04em;line-height:1.05;margin:2px 0 2px">₹{{ m.share }}</div>
+              <div style="font-size:12.5px;color:rgba(33,28,38,.5);font-weight:600;margin-bottom:12px;white-space:nowrap">each · {{ m.riders }}</div>
+              <div style="display:inline-block;white-space:nowrap;background:#E4F2EC;color:#0F6B52;font:700 12.5px Karla,sans-serif;padding:7px 11px;border-radius:8px;margin-bottom:16px">You save ₹{{ m.saves }}</div>
+              <button onClick="{{ m.choose }}" style="display:block;width:100%;border:0;border-radius:14px;padding:15px;background:{{ m.ctaBg }};color:{{ m.ctaFg }};font:700 14.5px Karla,sans-serif;cursor:pointer;transition:transform .16s" style-hover="transform:translateY(-2px)">Request to pool</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:22px;padding:20px 24px;border:1px dashed rgba(33,28,38,.2);border-radius:22px;display:flex;align-items:center;gap:14px">
+      <span style="width:34px;height:34px;border-radius:50%;background:#F7EBF3;display:flex;align-items:center;justify-content:center;font:700 14px 'Familjen Grotesk',sans-serif;color:#8A2B6B">i</span>
+      <p style="margin:0;font-size:13.5px;color:rgba(33,28,38,.58);line-height:1.5">Scores weigh shared distance, direction of travel and pickup-time compatibility. Only verified @spit.ac.in requests enter the graph.</p>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isConfirmed }}">
+  <div data-screen-label="05 Match confirmed" style="max-width:1180px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start">
+      <div style="background:linear-gradient(150deg,#2B2130,#4A2340 60%,#6E2A57);border-radius:28px;padding:34px 36px;color:#FDFAF4;position:relative;overflow:hidden;box-shadow:0 32px 60px -32px rgba(33,28,38,.95)">
+        <svg viewBox="0 0 640 300" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;opacity:.4" fill="none">
+          <path d="M-20 260 C140 260 120 90 320 90 C500 90 500 170 660 158" stroke="{{ accent }}" stroke-width="2.4" stroke-dasharray="900" style="animation:{{ lineAnim }}"></path>
+          <path d="M-20 296 C180 296 220 140 420 140 C560 140 600 210 660 204" stroke="#FDFAF4" stroke-opacity=".25" stroke-width="1.4" stroke-dasharray="3 8"></path>
+        </svg>
+        <div style="position:relative">
+          <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(228,242,236,.16);color:#8FE3C4;font:700 11px Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;border-radius:999px;margin-bottom:18px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12.6l4.4 4.4L19 7" stroke="#8FE3C4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Pool confirmed
+          </div>
+          <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:42px;letter-spacing:-.038em;line-height:1.03;margin:0 0 12px">You're pooling with Rhea &amp; Kabir</h1>
+          <p style="margin:0 0 28px;font-size:15px;line-height:1.55;color:rgba(253,250,244,.72);max-width:440px">₹60 each instead of ₹180 solo. Meet at the node, then flag one auto together.</p>
+          <div style="display:flex;gap:32px;padding-top:24px;border-top:1px solid rgba(253,250,244,.16)">
+            <div><div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.55);margin-bottom:6px">Meeting point</div><div style="font:700 17px 'Familjen Grotesk',sans-serif">Gate 2, S.P.I.T</div></div>
+            <div><div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.55);margin-bottom:6px">Time</div><div style="font:700 17px 'Familjen Grotesk',sans-serif">6:15 PM</div></div>
+            <div><div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.55);margin-bottom:6px">Your share</div><div style="font:700 17px 'Familjen Grotesk',sans-serif;color:{{ accent }}">₹60</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:28px;padding:28px;box-shadow:0 1px 2px rgba(33,28,38,.04),0 26px 50px -38px rgba(33,28,38,.7)">
+        <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(33,28,38,.42);margin-bottom:16px">Fare split</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+          <sc-for list="{{ group }}" as="g" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="width:38px;height:38px;border-radius:12px;background:{{ g.bg }};color:{{ g.fg }};font:700 13px 'Familjen Grotesk',sans-serif;display:flex;align-items:center;justify-content:center">{{ g.init }}</span>
+              <div style="flex:1;min-width:0"><div style="font:700 14px Karla,sans-serif">{{ g.name }}</div><div style="font-size:12px;color:rgba(33,28,38,.5);font-weight:600">{{ g.meta }}</div></div>
+              <span style="font:700 16px 'Familjen Grotesk',sans-serif">₹{{ g.amt }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:16px;border-top:1px solid rgba(33,28,38,.08);font:700 15px 'Familjen Grotesk',sans-serif"><span>Auto total</span><span>₹180</span></div>
+        <div style="display:flex;gap:10px;margin-top:22px">
+          <button style="flex:1;border:0;border-radius:13px;padding:14px;background:#211C26;color:#FDFAF4;font:700 13.5px Karla,sans-serif;cursor:pointer;transition:transform .16s" style-hover="transform:translateY(-2px)">Open group chat</button>
+          <button style="border:1px solid rgba(33,28,38,.14);border-radius:13px;padding:14px 16px;background:#fff;font:700 13.5px Karla,sans-serif;cursor:pointer" style-hover="background:#F4EEE3">Share ETA</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:22px;padding:24px">
+          <div style="width:30px;height:30px;border-radius:50%;background:#F4EEE3;font:700 13px 'Familjen Grotesk',sans-serif;display:flex;align-items:center;justify-content:center;margin-bottom:14px">{{ s.n }}</div>
+          <div style="font:700 15.5px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin-bottom:6px">{{ s.title }}</div>
+          <p style="margin:0;font-size:13.5px;line-height:1.5;color:rgba(33,28,38,.55)">{{ s.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isHistory }}">
+  <div data-screen-label="06 Ride history" style="max-width:1180px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:40px;letter-spacing:-.035em;margin:0 0 8px">Ride history</h1>
+    <p style="margin:0 0 26px;font-size:15.5px;color:rgba(33,28,38,.58)">18 pools since March · every one with a verified student.</p>
+
+    <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:start;margin-bottom:22px">
+      <div style="background:linear-gradient(150deg,#2B2130,#4A2340);border-radius:26px;padding:32px;color:#FDFAF4;box-shadow:0 26px 50px -32px rgba(33,28,38,.9)">
+        <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.55)">Total saved</div>
+        <div style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:62px;letter-spacing:-.045em;margin:8px 0 6px">₹2,340</div>
+        <div style="font-size:13.5px;color:#8FE3C4;font-weight:700;margin-bottom:26px">▲ ₹410 vs last month</div>
+        <div style="display:flex;gap:28px;padding-top:22px;border-top:1px solid rgba(253,250,244,.16)">
+          <div><div style="font:700 24px 'Familjen Grotesk',sans-serif;letter-spacing:-.03em">18</div><div style="font-size:12px;color:rgba(253,250,244,.6);font-weight:600">pools</div></div>
+          <div><div style="font:700 24px 'Familjen Grotesk',sans-serif;letter-spacing:-.03em">₹130</div><div style="font-size:12px;color:rgba(253,250,244,.6);font-weight:600">avg saved</div></div>
+          <div><div style="font:700 24px 'Familjen Grotesk',sans-serif;letter-spacing:-.03em">41</div><div style="font-size:12px;color:rgba(253,250,244,.6);font-weight:600">co-riders met</div></div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:26px;padding:28px;box-shadow:0 1px 2px rgba(33,28,38,.04),0 26px 50px -38px rgba(33,28,38,.7)">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+          <div style="font:700 16px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em">Monthly savings</div>
+          <div style="font-size:12px;color:rgba(33,28,38,.45);font-weight:600">₹ per month</div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:14px;height:180px">
+          <sc-for list="{{ chart }}" as="c" hint-placeholder-count="6">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;height:100%;justify-content:flex-end">
+              <span style="font:700 12.5px 'Familjen Grotesk',sans-serif;color:{{ c.labelFg }}">{{ c.val }}</span>
+              <div style="width:100%;height:{{ c.h }};border-radius:10px 10px 4px 4px;background:{{ c.fill }};transform-origin:bottom;animation:growBar .7s cubic-bezier(.2,.8,.2,1) both;transition:height .4s"></div>
+              <span style="font:700 10.5px Karla,sans-serif;letter-spacing:.08em;color:rgba(33,28,38,.42)">{{ c.m }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:26px;overflow:hidden;box-shadow:0 1px 2px rgba(33,28,38,.04),0 26px 50px -40px rgba(33,28,38,.7)">
+      <div style="display:grid;grid-template-columns:1.5fr 1.2fr .8fr .7fr .7fr;gap:16px;padding:16px 26px;background:#F9F4EA;font:700 10.5px Karla,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(33,28,38,.45)">
+        <span>Route</span><span>Pooled with</span><span>Date</span><span>Your share</span><span>Saved</span>
+      </div>
+      <sc-for list="{{ rides }}" as="r" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:1.5fr 1.2fr .8fr .7fr .7fr;gap:16px;padding:18px 26px;border-top:1px solid rgba(33,28,38,.06);align-items:center;transition:background .16s" style-hover="background:#FDFAF4">
+          <div style="display:flex;align-items:center;gap:12px">
+            <svg width="46" height="20" viewBox="0 0 46 20" fill="none"><path d="M4 15 C16 15 14 5 26 5 C36 5 36 10 42 9" stroke="{{ accent }}" stroke-width="2.2" stroke-linecap="round"></path><circle cx="4" cy="15" r="3" fill="#8A2B6B"></circle><circle cx="42" cy="9" r="3" fill="#211C26"></circle></svg>
+            <span style="font:700 14px Karla,sans-serif">{{ r.route }}</span>
+          </div>
+          <span style="font-size:13.5px;color:rgba(33,28,38,.6);font-weight:600">{{ r.people }}</span>
+          <span style="font-size:13.5px;color:rgba(33,28,38,.5);font-weight:600">{{ r.date }}</span>
+          <span style="font:700 14.5px 'Familjen Grotesk',sans-serif">₹{{ r.share }}</span>
+          <span style="font:700 14.5px 'Familjen Grotesk',sans-serif;color:#157F63">+₹{{ r.saved }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isNotifs }}">
+  <div data-screen-label="07 Notifications" style="max-width:760px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:38px;letter-spacing:-.035em;margin:0 0 24px">Notifications</h1>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="5">
+        <div style="display:flex;gap:16px;background:{{ n.bg }};border:1px solid {{ n.bd }};border-radius:20px;padding:20px 22px;transition:transform .16s" style-hover="transform:translateX(3px)">
+          <span style="width:40px;height:40px;border-radius:13px;background:{{ n.chip }};color:{{ n.chipFg }};font:700 14px 'Familjen Grotesk',sans-serif;display:flex;align-items:center;justify-content:center;flex:none">{{ n.icon }}</span>
+          <div style="flex:1;min-width:0">
+            <div style="font:700 14.5px Karla,sans-serif;margin-bottom:3px">{{ n.title }}</div>
+            <p style="margin:0;font-size:13.5px;line-height:1.5;color:rgba(33,28,38,.58)">{{ n.body }}</p>
+          </div>
+          <span style="font-size:12px;color:rgba(33,28,38,.4);font-weight:600;flex:none">{{ n.time }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isProfile }}">
+  <div data-screen-label="08 Profile" style="max-width:900px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <div style="display:flex;align-items:center;gap:22px;margin-bottom:28px">
+      <span style="width:84px;height:84px;border-radius:26px;background:linear-gradient(150deg,#F7D9A8,#E8C9DE);font:700 28px 'Familjen Grotesk',sans-serif;color:#5C3350;display:flex;align-items:center;justify-content:center">NK</span>
+      <div>
+        <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-.035em;margin:0 0 6px">Nishika Khade</h1>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(33,28,38,.6);font-weight:600">
+          <span style="display:inline-flex;align-items:center;gap:6px;color:#157F63"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#157F63"></circle><path d="M7.6 12.3l3 3 5.6-6" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ emailFull }}</span>
+          <span>·</span><span>TE Computer Engineering</span><span>·</span><span>Female</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:24px;padding:26px">
+        <div style="font:700 16px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin-bottom:18px">Pooling preferences</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ prefs }}" as="p" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div style="flex:1;min-width:0"><div style="font:700 14px Karla,sans-serif">{{ p.label }}</div><div style="font-size:12.5px;color:rgba(33,28,38,.5)">{{ p.sub }}</div></div>
+              <span style="width:46px;height:26px;border-radius:999px;background:{{ p.track }};position:relative;flex:none;transition:background .2s"><span style="position:absolute;top:3px;left:{{ p.knob }};width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(33,28,38,.3);transition:left .2s"></span></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:#F7EBF3;border:1px solid rgba(138,43,107,.1);border-radius:24px;padding:26px">
+          <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(92,51,80,.55);margin-bottom:12px">Verification</div>
+          <p style="margin:0 0 14px;font-size:13.5px;line-height:1.55;color:#5C3350">Your institute email was verified on 14 March 2026. Re-verification is required each academic year.</p>
+          <span style="display:inline-flex;align-items:center;gap:7px;background:#fff;color:#0F6B52;font:700 12px Karla,sans-serif;padding:8px 12px;border-radius:999px">Active until June 2027</span>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:24px;padding:26px">
+          <div style="font:700 16px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin-bottom:12px">Home node</div>
+          <div style="font-size:14px;color:rgba(33,28,38,.6);line-height:1.5">Jogeshwari East, near Ram Mandir station. Used as the default drop node on your evening requests.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isAdmin }}">
+  <div data-screen-label="09 Campus insights" style="max-width:1180px;margin:0 auto;padding:{{ pad }} 32px 70px;animation:screenIn .34s cubic-bezier(.2,.7,.2,1)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font:700 11px Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(33,28,38,.45);border:1px solid rgba(33,28,38,.14);padding:6px 11px;border-radius:999px;margin-bottom:14px">Admin view · S.P.I.T Andheri</div>
+        <h1 style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:40px;letter-spacing:-.035em;margin:0">Campus insights</h1>
+      </div>
+      <div style="font-size:13px;color:rgba(33,28,38,.45);font-weight:600">Last 30 days</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:22px;padding:22px">
+          <div style="font:600 10.5px Karla,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(33,28,38,.42)">{{ k.label }}</div>
+          <div style="font-family:'Familjen Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-.035em;margin:6px 0 3px">{{ k.val }}</div>
+          <div style="font-size:12px;font-weight:700;color:{{ k.deltaFg }}">{{ k.delta }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:20px">
+      <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:24px;padding:28px">
+        <div style="font:700 16px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin-bottom:20px">Requests by hour</div>
+        <div style="display:flex;align-items:flex-end;gap:8px;height:170px">
+          <sc-for list="{{ peak }}" as="p" hint-placeholder-count="10">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end">
+              <div style="width:100%;height:{{ p.h }};border-radius:8px 8px 3px 3px;background:{{ p.fill }};transform-origin:bottom;animation:growBar .7s cubic-bezier(.2,.8,.2,1) both"></div>
+              <span style="font:700 10px Karla,sans-serif;color:rgba(33,28,38,.42)">{{ p.h24 }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(33,28,38,.06);border-radius:24px;padding:28px">
+        <div style="font:700 16px 'Familjen Grotesk',sans-serif;letter-spacing:-.02em;margin-bottom:20px">Popular corridors</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ corridors }}" as="c" hint-placeholder-count="5">
+            <div>
+              <div style="display:flex;justify-content:space-between;font:700 13.5px Karla,sans-serif;margin-bottom:7px"><span>{{ c.name }}</span><span style="color:rgba(33,28,38,.5)">{{ c.n }} pools</span></div>
+              <div style="height:8px;border-radius:999px;background:rgba(33,28,38,.08);overflow:hidden"><div style="height:100%;width:{{ c.w }};border-radius:999px;background:linear-gradient(90deg,{{ accent }},#8A2B6B)"></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#F2A230&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#F2A230&quot;,&quot;#5B57E0&quot;,&quot;#0FA36B&quot;,&quot;#E0457B&quot;],&quot;section&quot;:&quot;Look&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Restrained&quot;,&quot;Noticeable&quot;,&quot;Showy&quot;],&quot;default&quot;:&quot;Noticeable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Look&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Comfortable&quot;,&quot;Compact&quot;],&quot;default&quot;:&quot;Comfortable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Look&quot;},&quot;matchCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:1,&quot;max&quot;:3,&quot;default&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;showSavings&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;adminEnabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = { stage: 'email', screen: 'home', email: 'nishika.khade', otp: '', to: 'Jogeshwari East', win: '6:00 – 6:30 PM', flex: 10 };
+
+  go(screen) { this.setState({ screen }); }
+
+  startMatching = () => {
+    this.setState({ screen: 'matching' });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ screen: 'matches' }), 2200);
+  };
+
+  componentWillUnmount() { clearTimeout(this._t); }
+
+  renderVals() {
+    const accent = this.props.accentColor ?? '#F2A230';
+    const motion = this.props.motion ?? 'Noticeable';
+    const lineAnim = motion === 'Restrained'
+      ? 'none'
+      : motion === 'Showy'
+        ? 'drawLine 1.1s cubic-bezier(.4,0,.2,1) both'
+        : 'drawLine 1.7s cubic-bezier(.4,0,.2,1) both';
+    const pad = (this.props.density ?? 'Comfortable') === 'Compact' ? '28px' : '44px';
+    const s = this.state;
+    const emailFull = (s.email || 'you') + '@spit.ac.in';
+
+    const otpCells = [0, 1, 2, 3].map(i => {
+      const filled = i < s.otp.length;
+      const active = i === s.otp.length;
+      return {
+        d: filled ? s.otp[i] : '',
+        bd: active ? accent : filled ? 'rgba(33,28,38,.55)' : 'rgba(33,28,38,.12)',
+        sh: active ? '0 0 0 4px rgba(242,162,48,.18)' : '0 1px 2px rgba(33,28,38,.04)'
+      };
+    });
+
+    const tap = d => () => {
+      if (d === 'del') return this.setState(p => ({ otp: p.otp.slice(0, -1) }));
+      if (d === 'ok') return this.setState(p => p.otp.length === 4 ? { stage: 'verified' } : null);
+      this.setState(p => {
+        if (p.otp.length >= 4) return null;
+        const next = p.otp + d;
+        if (next.length === 4) setTimeout(() => this.setState({ stage: 'verified' }), 420);
+        return { otp: next };
+      });
+    };
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'del', '0', 'ok'].map(k => ({
+      label: k === 'del' ? '⌫' : k === 'ok' ? '✓' : k,
+      press: tap(k)
+    }));
+
+    const destNames = ['Jogeshwari East', 'Versova', 'Vile Parle East', 'Goregaon West', 'Marol', 'Malad West'];
+    const dests = destNames.map(name => {
+      const on = s.to === name;
+      return {
+        name,
+        pick: () => this.setState({ to: name }),
+        bg: on ? '#211C26' : '#FDFAF4',
+        fg: on ? '#FDFAF4' : 'rgba(33,28,38,.7)',
+        bd: on ? '#211C26' : 'rgba(33,28,38,.1)'
+      };
+    });
+
+    const winLabels = ['5:30 – 6:00 PM', '6:00 – 6:30 PM', '6:30 – 7:00 PM', '7:00 – 7:30 PM'];
+    const windows = winLabels.map(label => {
+      const on = s.win === label;
+      return {
+        label,
+        pick: () => this.setState({ win: label }),
+        bg: on ? accent : '#FDFAF4',
+        fg: '#211C26',
+        bd: on ? accent : 'rgba(33,28,38,.1)'
+      };
+    });
+
+    const allMatches = [
+      { init: 'RM', name: 'Rhea Menon', meta: 'TE Comps · Female · verified @spit.ac.in', avBg: '#F7E3F0', avFg: '#5C3350',
+        tags: ['TE Comps', 'Verified email', 'Female'], overlap: '92% shared · same direction', bar: '92%', rank: 'Best match',
+        dep: '6:15 PM', walk: '2 min', solo: 180, share: 60, saves: 120, riders: '3 pooling', dropShort: 'JOGESHWARI',
+        border: 'rgba(242,162,48,.5)', shadow: '0 2px 4px rgba(33,28,38,.04),0 30px 56px -34px rgba(33,28,38,.8)',
+        rankBg: '#FFF1DB', rankFg: '#A96A0C', ctaBg: accent, ctaFg: '#211C26' },
+      { init: 'KS', name: 'Kabir Shetty', meta: 'BE IT · Male · verified @spit.ac.in', avBg: '#DCEDE6', avFg: '#1F5A4A',
+        tags: ['BE IT', 'Verified email', 'Male'], overlap: '78% shared · same direction', bar: '78%', rank: 'Strong',
+        dep: '6:20 PM', walk: '4 min', solo: 180, share: 70, saves: 110, riders: '3 pooling', dropShort: 'RAM MANDIR',
+        border: 'rgba(33,28,38,.07)', shadow: '0 1px 2px rgba(33,28,38,.04),0 24px 46px -38px rgba(33,28,38,.7)',
+        rankBg: '#F4EEE3', rankFg: 'rgba(33,28,38,.55)', ctaBg: '#211C26', ctaFg: '#FDFAF4' },
+      { init: 'AD', name: 'Ananya Deshpande', meta: 'SE EXTC · Female · verified @spit.ac.in', avBg: '#E7E3F7', avFg: '#3E3470',
+        tags: ['SE EXTC', 'Verified email', 'Female'], overlap: '61% shared · partial leg', bar: '61%', rank: 'Detour',
+        dep: '6:35 PM', walk: '7 min', solo: 180, share: 95, saves: 85, riders: '2 pooling', dropShort: 'GOREGAON',
+        border: 'rgba(33,28,38,.07)', shadow: '0 1px 2px rgba(33,28,38,.04),0 24px 46px -38px rgba(33,28,38,.7)',
+        rankBg: '#F4EEE3', rankFg: 'rgba(33,28,38,.55)', ctaBg: '#211C26', ctaFg: '#FDFAF4' }
+    ].slice(0, Math.max(1, Math.min(3, this.props.matchCount ?? 3)));
+
+    const matches = allMatches.map(m => ({ ...m, choose: () => this.go('confirmed') }));
+
+    const navItems = [
+      { label: 'Dashboard', k: 'home' },
+      { label: 'Request', k: 'request' },
+      { label: 'Matches', k: 'matches' },
+      { label: 'History', k: 'history' }
+    ].concat((this.props.adminEnabled ?? true) ? [{ label: 'Campus insights', k: 'admin' }] : [])
+      .map(n => {
+        const on = s.screen === n.k || (n.k === 'matches' && s.screen === 'confirmed');
+        return { label: n.label, go: () => this.go(n.k), bg: on ? '#211C26' : 'transparent', fg: on ? '#FDFAF4' : 'rgba(33,28,38,.62)' };
+      });
+
+    const spark = [34, 44, 40, 58, 70, 96].map((h, i) => ({
+      h: h + '%', fill: i === 5 ? accent : 'rgba(33,28,38,.12)'
+    }));
+
+    const chart = [
+      { m: 'MAR', v: 180, h: 24 }, { m: 'APR', v: 260, h: 36 }, { m: 'MAY', v: 320, h: 45 },
+      { m: 'JUN', v: 480, h: 66 }, { m: 'JUL', v: 690, h: 88 }, { m: 'AUG', v: 410, h: 56 }
+    ].map((c, i) => ({
+      m: c.m, val: '₹' + c.v, h: c.h + '%',
+      fill: i === 4 ? 'linear-gradient(180deg,' + accent + ',#D9820D)' : 'rgba(33,28,38,.11)',
+      labelFg: i === 4 ? '#211C26' : 'rgba(33,28,38,.4)'
+    }));
+
+    return {
+      accent, lineAnim, pad, emailFull, otpCells, keys, dests, windows,
+      email: s.email, from: 'S.P.I.T Gate 2, Andheri East', to: s.to, toShort: s.to.split(' ')[0].toUpperCase(),
+      win: s.win, flex: s.flex, flexW: Math.round((s.flex / 30) * 100) + '%',
+      isAuth: s.screen === 'auth' || s.stage !== 'in',
+      stageEmail: s.stage === 'email', stageOtp: s.stage === 'otp', stageVerified: s.stage === 'verified',
+      inApp: s.stage === 'in',
+      isHome: s.screen === 'home', isRequest: s.screen === 'request', isMatching: s.screen === 'matching',
+      isMatches: s.screen === 'matches', isConfirmed: s.screen === 'confirmed', isHistory: s.screen === 'history',
+      isNotifs: s.screen === 'notifs', isProfile: s.screen === 'profile', isAdmin: s.screen === 'admin',
+      showSavings: this.props.showSavings ?? true,
+      matches, matchCountLabel: matches.length + (matches.length === 1 ? ' match found' : ' matches found'),
+      spark, chart,
+      onEmail: e => this.setState({ email: e.target.value.replace(/[^a-zA-Z0-9._-]/g, '') }),
+      sendCode: () => this.setState({ stage: 'otp', otp: '' }),
+      backToEmail: () => this.setState({ stage: 'email', otp: '' }),
+      enterApp: () => this.setState({ stage: 'in', screen: 'home' }),
+      startMatching: this.startMatching,
+      goHome: () => this.go('home'), goRequest: () => this.go('request'), goHistory: () => this.go('history'),
+      goConfirmed: () => this.go('confirmed'), goNotifs: () => this.go('notifs'), goProfile: () => this.go('profile'),
+      navItems,
+      moreFlex: () => this.setState({ flex: Math.min(30, s.flex + 5) }),
+      lessFlex: () => this.setState({ flex: Math.max(5, s.flex - 5) }),
+      activity: [
+        { icon: '₹', chip: '#FFF1DB', chipFg: '#A96A0C', title: 'Versova pool settled', sub: 'Tue · with Ananya, Dhruv', amt: '+₹85' },
+        { icon: '◍', chip: '#F7EBF3', chipFg: '#8A2B6B', title: 'Vile Parle pool completed', sub: 'Mon · with Sana', amt: '+₹70' },
+        { icon: '◍', chip: '#DCEDE6', chipFg: '#1F5A4A', title: 'Marol pool completed', sub: 'Sun · with Kabir, Rhea', amt: '+₹95' }
+      ],
+      busy: [
+        { name: 'SPIT → Jogeshwari E', n: '14 open', w: '86%' },
+        { name: 'SPIT → Versova', n: '9 open', w: '58%' },
+        { name: 'SPIT → Vile Parle E', n: '6 open', w: '38%' }
+      ],
+      group: [
+        { init: 'NK', name: 'Nishika Khade (you)', meta: 'TE Comps · drops at Jogeshwari E', amt: 60, bg: 'linear-gradient(150deg,#F7D9A8,#E8C9DE)', fg: '#5C3350' },
+        { init: 'RM', name: 'Rhea Menon', meta: 'TE Comps · drops at Ram Mandir', amt: 60, bg: '#F7E3F0', fg: '#5C3350' },
+        { init: 'KS', name: 'Kabir Shetty', meta: 'BE IT · drops at Jogeshwari W', amt: 60, bg: '#DCEDE6', fg: '#1F5A4A' }
+      ],
+      steps: [
+        { n: '1', title: 'Meet at Gate 2', body: 'Be at the S.P.I.T main gate by 6:12 PM. Rhea and Kabir get the same reminder.' },
+        { n: '2', title: 'Flag one auto together', body: 'RoutePool does not dispatch a driver in Phase 1. Hail a shared auto at the gate as a group.' },
+        { n: '3', title: 'Settle ₹60 each', body: 'Pay the driver ₹180 and square up over UPI. Your split is logged to ride history.' }
+      ],
+      rides: [
+        { route: 'SPIT → Jogeshwari E', people: 'Rhea, Kabir', date: '18 Aug', share: 60, saved: 120 },
+        { route: 'SPIT → Versova', people: 'Ananya, Dhruv', date: '16 Aug', share: 75, saved: 85 },
+        { route: 'SPIT → Vile Parle E', people: 'Sana', date: '12 Aug', share: 80, saved: 70 },
+        { route: 'SPIT → Marol', people: 'Kabir, Rhea', date: '09 Aug', share: 55, saved: 95 },
+        { route: 'SPIT → Goregaon W', people: 'Ishaan', date: '05 Aug', share: 110, saved: 90 }
+      ],
+      notifs: [
+        { icon: '✓', chip: '#DCEDE6', chipFg: '#0F6B52', title: 'Rhea accepted your pool request', body: 'Meet at Gate 2 at 6:15 PM. Your share is ₹60.', time: '4m', bg: '#fff', bd: 'rgba(242,162,48,.45)' },
+        { icon: '◍', chip: '#FFF1DB', chipFg: '#A96A0C', title: '3 new matches on your evening route', body: 'Two students are heading to Jogeshwari East between 6:00 and 6:30 PM.', time: '22m', bg: '#fff', bd: 'rgba(33,28,38,.07)' },
+        { icon: '₹', chip: '#F7EBF3', chipFg: '#8A2B6B', title: 'Versova pool settled', body: 'Ananya marked ₹85 as received. Logged to your history.', time: '1d', bg: '#fff', bd: 'rgba(33,28,38,.07)' },
+        { icon: '!', chip: '#F4EEE3', chipFg: 'rgba(33,28,38,.6)', title: 'Re-verify before term starts', body: 'Institute email checks refresh each academic year. Takes 30 seconds.', time: '2d', bg: '#fff', bd: 'rgba(33,28,38,.07)' }
+      ],
+      prefs: [
+        { label: 'Women-only pools', sub: 'Only match me with female students', on: true },
+        { label: 'Auto-accept best match', sub: 'Skip the results screen above 85% overlap', on: false },
+        { label: 'Evening reminders', sub: 'Nudge me at 5:30 PM on weekdays', on: true },
+        { label: 'Show my branch to matches', sub: 'TE Computer Engineering', on: true }
+      ].map(p => ({ ...p, track: p.on ? '#157F63' : 'rgba(33,28,38,.18)', knob: p.on ? '23px' : '3px' })),
+      kpis: [
+        { label: 'Requests', val: '2,914', delta: '▲ 18% MoM', deltaFg: '#157F63' },
+        { label: 'Match rate', val: '68%', delta: '▲ 5 pts', deltaFg: '#157F63' },
+        { label: 'Fares saved', val: '₹1.9L', delta: '▲ ₹31k', deltaFg: '#157F63' },
+        { label: 'Avg pool size', val: '2.7', delta: '▼ 0.1', deltaFg: 'rgba(33,28,38,.45)' }
+      ],
+      peak: [
+        { h24: '08', v: 38 }, { h24: '09', v: 62 }, { h24: '10', v: 30 }, { h24: '12', v: 22 }, { h24: '14', v: 26 },
+        { h24: '16', v: 44 }, { h24: '17', v: 78 }, { h24: '18', v: 100 }, { h24: '19', v: 66 }, { h24: '21', v: 24 }
+      ].map(p => ({ h24: p.h24, h: p.v + '%', fill: p.v > 70 ? 'linear-gradient(180deg,' + accent + ',#D9820D)' : 'rgba(33,28,38,.11)' })),
+      corridors: [
+        { name: 'SPIT → Jogeshwari E', n: 412, w: '100%' },
+        { name: 'SPIT → Andheri W', n: 331, w: '80%' },
+        { name: 'SPIT → Versova', n: 268, w: '65%' },
+        { name: 'SPIT → Vile Parle E', n: 191, w: '46%' },
+        { name: 'SPIT → Goregaon W', n: 122, w: '30%' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
